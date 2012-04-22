@@ -10,3 +10,7 @@
 *.lai
 *.la
 *.a
+
+#untracked directories
+log/*
+bin/*
