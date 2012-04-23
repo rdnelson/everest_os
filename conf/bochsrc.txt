@@ -8,4 +8,4 @@ boot: a
 log: log/bochsout.txt
 mouse: enabled=0
 clock: sync=realtime
-cpu: ips=500000, reset_on_triple_fault=0
+cpu: reset_on_triple_fault=0
