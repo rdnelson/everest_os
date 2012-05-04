@@ -1,7 +1,10 @@
+#include <kmain.h>
 #include <vga_text.h>
 #include <descriptor_tables.h>
+#include <timer.h>
+#include <paging.h>
 
-int kmain(struct multiboot *mboot_ptr) {
+int kmain(multiboot_info_t *mboot_ptr) {
 	monitor_clear();
 	monitor_print("Hello World\n");
 	monitor_print("This is a test of the newline stuff!\n\n");
@@ -10,9 +13,19 @@ int kmain(struct multiboot *mboot_ptr) {
 	monitor_print("\nTesting dec out: ");
 	monitor_print_dec(123456789);
 	monitor_put('\n');
+	monitor_print("Lower memory: ");
+	monitor_print_dec(mboot_ptr->mem_lower);
+	monitor_print(" KB\nUpper memory: ");
+	monitor_print_dec(mboot_ptr->mem_upper/1024);
+	monitor_print(" MB\n");
+	monitor_put('\n');
 	init_gdt_idt();
-	asm volatile ("int $0x3");
-	asm volatile ("int $0x4");
-	monitor_print("I'm frozen now, goodbye.\n");
+	asm volatile("sti");
+	//init_timer(50);
+	init_paging(mboot_ptr->mem_upper * 1024);
+	u32int_t *ptr = 0xA0000000;
+	//*ptr = 5;
+	monitor_print("Finished successfully! Deliberately Page faulting now...");
+	*ptr = 5;
 	return 0xDEADBEEF;
 }

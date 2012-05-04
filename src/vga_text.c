@@ -2,7 +2,7 @@
 #include <common.h>
 #include <string.h>
 
-static u16int_t* vid_mem = 0xB8000;
+static u16int_t* vid_mem = (u16int_t*)0xB8000;
 static int cursor_x = 0;
 static int cursor_y = 0;
 
@@ -25,7 +25,7 @@ static void scroll() {
 		for(i = 0; i < (CONSOLE_HEIGHT - 1); i++) {
 			memcpy(vid_mem + i*CONSOLE_WIDTH, vid_mem + (i+1)*CONSOLE_WIDTH, CONSOLE_WIDTH*sizeof(u16int_t));
 		}
-		memset(vid_mem + (CONSOLE_HEIGHT - 1)*CONSOLE_WIDTH, 0, CONSOLE_WIDTH*sizeof(u16int_t));
+		memset(vid_mem + (CONSOLE_HEIGHT - 1)*CONSOLE_WIDTH, blank, CONSOLE_WIDTH*sizeof(u16int_t));
 
 		cursor_y = CONSOLE_HEIGHT - 1;
 	}
