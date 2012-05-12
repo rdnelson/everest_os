@@ -85,12 +85,12 @@ void free_frame(page_t *page) {
 
 void init_paging(u32int_t mem_size) {
 	nframes = mem_size / 0x1000; //number of frames occupied by memory
-	frames = (u32int_t*)kmalloc(INDEX_FROM_BIT(nframes)); //initialize bitmap
-	memset(frames, 0, INDEX_FROM_BIT(nframes)); 
+	frames = (u32int_t*)kmalloc(INDEX_FROM_BIT(nframes)); //create bitmap
+	memset(frames, 0, INDEX_FROM_BIT(nframes)); //initialize bitmap to zero (no pages/frames occupied)
 
-	kernel_dir = (page_dir_t*)kmalloc_a(sizeof(page_dir_t));
-	memset(kernel_dir, 0, sizeof(page_dir_t));
-	kernel_dir->physical_addr = (u32int_t)kernel_dir;
+	kernel_dir = (page_dir_t*)kmalloc_a(sizeof(page_dir_t)); //create kernel directory (page aligned)
+	memset(kernel_dir, 0, sizeof(page_dir_t)); //clear it
+	kernel_dir->physical_addr = (u32int_t)kernel_dir; //store it's physical address
 	cur_dir = kernel_dir;
 
 	int i = 0;
@@ -135,7 +135,7 @@ void page_fault(registers_t regs) {
 
 	monitor_print("Page Fault! ( ");
 	if(!(regs.err_code & 0x01)) monitor_print("present ");
-	if(regs.err_code & 0x02) monitor_print("read-only ");
+	if(!(regs.err_code & 0x02)) monitor_print("read-only ");
 	if(regs.err_code & 0x04) monitor_print("user-mode ");
 	if(regs.err_code & 0x08) monitor_print("reserved ");
 	monitor_print(") at ");
