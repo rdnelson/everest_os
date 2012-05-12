@@ -6,20 +6,11 @@
 
 int kmain(multiboot_info_t *mboot_ptr) {
 	monitor_clear();
-	monitor_print("Hello World\n");
-	monitor_print("This is a test of the newline stuff!\n\n");
-	monitor_print("Testing hex out: ");
-	monitor_print_hex(0xDEADBEEF);
-	monitor_print("\nTesting dec out: ");
-	monitor_print_dec(123456789);
-	monitor_put('\n');
-	monitor_print("Lower memory: ");
+	vga_printk("Lower memory: %d KB\n", mboot_ptr->mem_lower);
 	monitor_print_dec(mboot_ptr->mem_lower);
-	monitor_print(" KB\nUpper memory: ");
-	monitor_print_dec(mboot_ptr->mem_upper/1024);
-	monitor_print(" MB\n");
-	monitor_put('\n');
+	vga_printk("Upper memory: %d MB\n", mboot_ptr->mem_upper/1024);
 	init_gdt_idt();
+	vga_printk("Hello printk\nString: %s\nHex: %x\nInteger: %d\n", "I'm Text!", 0xB005ED06, 12345);
 	asm volatile("sti");
 	//init_timer(50);
 	init_paging(mboot_ptr->mem_upper * 1024);

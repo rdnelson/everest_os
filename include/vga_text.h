@@ -31,6 +31,7 @@ void monitor_put(char c);
 void monitor_print(char* c);
 void monitor_print_hex(u32int_t);
 void monitor_print_dec(u32int_t);
+void vga_printk(char* fmt, ...);
 
 //extern u16int_t* vid_mem;
 //extern int cursor_x;

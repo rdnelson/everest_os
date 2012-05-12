@@ -98,3 +98,29 @@ void monitor_print_dec(u32int_t val) {
 		monitor_put(buf[i-1]);
 
 }
+
+void vga_printk(char* fmt, ...) {
+	int index = 8;
+	void* data;
+	while(*fmt != '\0') {
+		if(*fmt == '%') {
+			index += 4;
+			asm volatile("mov (%%ebp, %1), %0" : "=r"(data) : "r"(index));
+			switch(*(++fmt)) {
+			case 'd':
+				monitor_print_dec((int)data);
+				break;
+			case 'x':
+				monitor_print_hex((int)data);
+				break;
+			case 's':
+				monitor_print((char*)data);
+				break;
+			}
+		}else {
+			monitor_put(*fmt);
+		}
+		fmt++;
+	}
+}
+
