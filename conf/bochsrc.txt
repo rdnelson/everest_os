@@ -1,11 +1,13 @@
 # 350 MHz Pentium with 32 MB RAM
 
-megs: 32
+megs: 128
 romimage: file=/usr/share/bochs/BIOS-bochs-latest
 #vgaromimage: file=/usr/share/bochs/VGABIOS-elpin-2.40
 floppya: 1_44=/dev/loop0, status=inserted
 boot: a
-log: log/bochsout.txt
+log: log/bochsout.txt  
+#debug: action=report
 mouse: enabled=0
 clock: sync=realtime
 cpu: reset_on_triple_fault=0
+# ips=900000
