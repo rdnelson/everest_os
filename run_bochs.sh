@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ bin/floppy.img -nt bin/kernel ]
+if [ ! -e bin/floppy.img ] || [ bin/floppy.img -nt bin/kernel ]
 then 
 	./update_image.sh
 fi
