@@ -28,11 +28,12 @@
 
 void monitor_clear();
 void monitor_put(char c);
+void monitor_printf(char* c, ...);
 void monitor_print(char* c);
-void monitor_print_hex(u32int_t);
-void monitor_print_dec(u32int_t);
+void monitor_print_hex(uint32_t);
+void monitor_print_dec(uint32_t);
 
-//extern u16int_t* vid_mem;
+//extern uint16_t* vid_mem;
 //extern int cursor_x;
 //extern int cursor_y;
 

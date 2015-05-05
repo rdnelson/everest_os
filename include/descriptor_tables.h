@@ -4,33 +4,33 @@
 #include <common.h>
 
 struct gdt_entry {
-	u16int_t	limit_low;
-	u16int_t	base_low;
-	u8int_t		base_middle;
-	u8int_t		access;
-	u8int_t		granularity;
-	u8int_t		base_high;
+    uint16_t	limit_low;
+    uint16_t	base_low;
+    uint8_t		base_middle;
+    uint8_t		access;
+    uint8_t		granularity;
+    uint8_t		base_high;
 } __attribute__((packed));
 typedef struct gdt_entry gdt_entry_t;
 
 struct gdt_ptr {
-	u16int_t 	limit;
-	u32int_t 	base;
+    uint16_t 	limit;
+    uint32_t 	base;
 } __attribute__((packed));
 typedef struct gdt_ptr gdt_ptr_t;
 
 struct idt_entry {
-	u16int_t	base_low;
-	u16int_t	seg_select;
-	u8int_t		reserved;
-	u8int_t		flags;
-	u16int_t	base_high;
+    uint16_t	base_low;
+    uint16_t	seg_select;
+    uint8_t		reserved;
+    uint8_t		flags;
+    uint16_t	base_high;
 }__attribute__((packed));
 typedef struct idt_entry idt_entry_t;
 
 struct idt_ptr {
-	u16int_t limit;
-	u32int_t base;
+    uint16_t limit;
+    uint32_t base;
 }__attribute__((packed));
 typedef struct idt_ptr idt_ptr_t;
 
@@ -69,6 +69,7 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
+extern void isr32();
 
 void isr_common();
 

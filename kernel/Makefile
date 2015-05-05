@@ -4,7 +4,7 @@ BINDIR:=../bin
 ISODIR:=..
 CONFDIR:=../conf
 
-SOURCES=kmain.c common.c vga_text.c string.c descriptor_tables.c isr.c
+SOURCES=kmain.c common.c vga_text.c string.c descriptor_tables.c isr.c mboot.c
 ASM=boot.s gdt_idt_tables.s interrupts.s
 
 COBJS:=$(addprefix $(OBJDIR)/,$(SOURCES:.c=.o))
@@ -13,7 +13,8 @@ OBJS:=$(COBJS) $(ASMOBJS)
 
 KERNELOUT=$(BINDIR)/kernel
 ISOOUT=$(ISODIR)/everest.iso
-INCLUDES=-I../include
+INCLUDES:=../include ../libc
+INCLUDES:=$(addprefix -I,$(INCLUDES))
 
 PREFIX=i686-elf
 CC=$(PREFIX)-gcc
@@ -23,7 +24,7 @@ NASM=nasm
 MKDIR=mkdir -p
 CP=cp
 
-CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector $(INCLUDES)
+CFLAGS=-nostdlib -nostdinc -fno-builtin -fno-stack-protector $(INCLUDES) -Wall -Wextra -fno-asynchronous-unwind-tables
 LDFLAGS=-Tlink.ld
 ASFLAGS=-felf
 

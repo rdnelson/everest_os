@@ -2,14 +2,22 @@ MKDIR=mkdir -p
 RM:=rm -rf
 BINDIR:=bin
 
-all: | $(BINDIR)
-	$(MAKE) -C src/
+.PHONY: all clean run libc kernel
+
+all: libc kernel
+
+libc:
+	$(MAKE) -C libc/
+
+kernel: | $(BINDIR)
+	$(MAKE) -C kernel/
 
 $(BINDIR):
 	$(MKDIR) $(BINDIR)
 
 clean:
-	$(MAKE) -C src/ clean
+	$(MAKE) -C kernel/ clean
+	$(MAKE) -C libc/ clean
 	$(RM) $(ISODIR) $(BINDIR) $(ISO)
 
 run: all
